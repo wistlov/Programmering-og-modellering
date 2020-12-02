@@ -1,0 +1,176 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# # Smittespredning
+# 
+# ## Laget av William, Simon, Victoria og Valerie
+# 
+# oppgave 1:
+# 
+# "I" står for antall smittede individer
+# 
+#             𝐼𝑡+1=𝐼𝑡+𝑎𝐼𝑡
+# "a" er smitteraten
+# 
+# a) Formelen blir da antall smittete pluss de nye smittede
+# 
+# b) Hvis man skal ha en generell oversikt over veksten av noe upåvirket av andre faktorer
+# 
+# 
+
+# In[12]:
+
+
+from pylab import *
+
+I = 1 # Antall smittet
+a = 0.8 # smitterate 
+tid = 48 # uker
+populasjon = 157759 # total populasjon / antall individer
+tid_liste = [0]
+smittet_liste = [I]
+
+
+for i in range(tid):
+    I = I + a*I*(1-(I/populasjon))
+    tid_liste.append(i)
+    smittet_liste.append(I)
+
+plot(tid_liste, smittet_liste)
+show()
+
+
+# c ) Den er eksponensiell #fantastisk forklaring
+# d ) Den endrer seg, som man kan forvente
+
+# Oppgave 2
+
+# In[40]:
+
+
+from pylab import *
+
+I = 1 # Antall smittet
+a = 0.8 # smitterate 
+S = populasjon - I  #De som ikke har blitt smittet / ikke er imune
+tid = 48 # uker
+populasjon = 157759 # total populasjon / antall individer
+tid_liste = [0]
+utsatte_liste = [S]
+smittet_liste = [I]
+
+
+for i in range(tid):
+    I = I + a*I*(1-(I/populasjon))
+    S = populasjon - I
+    utsatte_liste.append(S)
+    tid_liste.append(i)
+    smittet_liste.append(I)
+
+plot(tid_liste, utsatte_liste)
+plot(tid_liste, smittet_liste)
+xlabel("uker")
+ylabel("populasjon")
+
+import matplotlib.patches as mpatches
+import matplotlib.pyplot as plt
+
+orange_patch = mpatches.Patch(color='orange', label='antall smittet')
+plt.legend(handles=[orange_patch])
+blue_patch = mpatches.Patch(color='blue', label='antall utsatte')
+plt.legend(handles=[blue_patch])
+
+plt.show()
+
+
+show()
+
+
+
+# Det som skjer her er at etterhvert som de smittede øker, blir det færre individer som er utsatte
+
+# Oppgave 3
+
+# In[90]:
+
+
+from pylab import *
+
+populasjon = 157759 # total populasjon / antall individer
+I = 1 # Antall smittet
+a = 0.5 # smitterate 
+b = 0.1 # bedringsrate
+S = populasjon - I  #De som ikke har blitt smittet / ikke er imune
+R = 0 # Friske
+tid = 48 # uker
+tid_liste = [0]
+utsatte_liste = [S]
+smittet_liste = [I]
+friske_liste = [R]
+
+
+for i in range(tid):
+    I = I + a*I*(1-(I/populasjon)) - (b*I)
+    R = R + b*I
+    S = populasjon - (I + R)
+    utsatte_liste.append(S)
+    tid_liste.append(i)
+    smittet_liste.append(I)
+    friske_liste.append(R)
+
+plot(tid_liste, utsatte_liste)
+plot(tid_liste, smittet_liste)
+plot(tid_liste, friske_liste)
+xlabel("uker")
+ylabel("populasjon")
+
+import matplotlib.patches as mpatches
+import matplotlib.pyplot as plt
+
+orange_patch = mpatches.Patch(color='orange', label='antall smittet')
+plt.legend(handles=[orange_patch])
+blue_patch = mpatches.Patch(color='blue', label='antall utsatte')
+plt.legend(handles=[blue_patch])
+
+plt.show()
+
+
+show()
+
+
+# In[117]:
+
+
+from pylab import *
+
+populasjon = 157759 # total populasjon / antall individer
+I = 3 # Antall smittet
+a = 4/populasjon # smitterate 
+b = 3.5 # bedringsrate
+S = populasjon - I  #De som ikke har blitt smittet / ikke er imune
+R = 0 # Friske
+tid = 48 # uker
+v = 0.01 # Vaksinerate i prosent
+
+tid_liste = [0]
+utsatte_liste = [S]
+smittet_liste = [I]
+friske_liste = [R]
+
+for i in range(1, tid):
+    S = (S - a*I*S)*(1-v) 
+    I = I + a*I*S - b*I
+    R = R + b*I
+    tid_liste.append(i)
+    utsatte_liste.append(S)
+    smittet_liste.append(I)
+    friske_liste.append(R)
+
+#plot(tid_liste, utsatte_liste, label = "utsatte")
+plot(tid_liste, smittet_liste, label = "smittet")
+#plot(tid_liste, friske_liste, label = "friske")
+legend()
+show()
+
+
+# Vaksinasjonsraten ligger på 5% i uken
