@@ -180,8 +180,11 @@ class Play(pygame.sprite.Sprite):
         self.image = pygame.image.load(os.path.join(img_folder, "play.png")).convert()
         self.rect =  self.image.get_rect()
         self.image.set_colorkey(black) 
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = x - 150
+        self.rect.y = y - 100
+    
+    def update(self):
+        blabla = 0 #Work in progress
 
 #####################################################################
 
