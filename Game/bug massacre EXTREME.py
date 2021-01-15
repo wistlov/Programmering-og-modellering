@@ -174,6 +174,15 @@ class Bullet(pygame.sprite.Sprite):
             
 #####################################################################
 
+class Play(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join(img_folder, "play.png")).convert()
+        self.rect =  self.image.get_rect()
+        self.image.set_colorkey(black) 
+
+#####################################################################
+
 def spawn_enemy():
         # This segment give the enemy x and y values that is on the edge of the screen
     n = random.randint(0, 2)
@@ -206,8 +215,10 @@ clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
+play = Play(WIDTH/2, HEIGHT/2)
 player = Player()
 all_sprites.add(player)
+all_sprites.add(play)
 spawn_enemy()
 spawn_enemy()
 
